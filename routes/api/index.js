@@ -4,5 +4,5 @@ const studentRoutes = require('./studentRoutes');
 
 router.use('/courses', courseRoutes);
 router.use('/students', studentRoutes);
-router.use('/thoughts', thoughtsRoutes);
+router.use('/thoughts', thoughtRoutes);
 module.exports = router;
