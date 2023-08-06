@@ -1,40 +1,38 @@
-// postRoutes.js
 const express = require('express');
 const router = express.Router();
-const isAdmin = require('../middleware/isAdmin'); // Custom middleware to check admin status
-const Post = require('../models/Post');
+const Thought = require('../models/Thought');
 const Reaction = require('../models/Reaction');
 
-// Route for an admin to post an image
-router.post('/post', isAdmin, async (req, res) => {
+// Route for users to create a new thought
+router.post('/thoughts', async (req, res) => {
   try {
-    const adminId = req.admin._id; // Assuming you have admin information in req.admin
-    const { image } = req.body;
+    const userId = req.user._id; 
+    const { text } = req.body;
 
-    const newPost = new Post({
-      admin: adminId,
-      image
-      // Other post details
+    const newThought = new Thought({
+      user: userId,
+      text
+      
     });
 
-    await newPost.save();
+    await newThought.save();
 
-    res.status(201).json({ message: 'Post created successfully' });
+    res.status(201).json({ message: 'Thought created successfully' });
   } catch (err) {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// Route for users to react to a post
-router.post('/react/:postId', async (req, res) => {
+// Route for users to react to a thought
+router.post('/reactions/:thoughtId', async (req, res) => {
   try {
-    const userId = req.user._id; // Assuming you have user information in req.user
-    const postId = req.params.postId;
+    const userId = req.user._id;
+    const thoughtId = req.params.thoughtId;
     const { reactionType } = req.body;
 
     const newReaction = new Reaction({
       user: userId,
-      post: postId,
+      thought: thoughtId,
       reactionType
     });
 

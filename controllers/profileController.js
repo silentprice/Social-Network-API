@@ -37,4 +37,3 @@ exports.editProfile = async (req, res) => {
   }
 };
 
-// Add more controllers for other profile-related actions (e.g., adding friends)

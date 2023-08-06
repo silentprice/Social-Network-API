@@ -12,7 +12,13 @@ exports.createReaction = async (req, res) => {
 
     const newReaction = await Reaction.create({ reactionBody, username, thoughtId });
     thought.reactions.push(newReaction._id);
-    await thought.save();
+
+    // Save the updated thought and handle any potential errors
+    try {
+      await thought.save();
+    } catch (error) {
+      return res.status(500).json({ error: 'Failed to save reaction to thought' });
+    }
 
     res.json(newReaction);
   } catch (error) {
@@ -29,11 +35,16 @@ exports.deleteReactionById = async (req, res) => {
 
     const thought = await Thought.findById(deletedReaction.thoughtId);
     thought.reactions.pull(deletedReaction._id);
-    await thought.save();
+
+    // Save the updated thought and handle any potential errors
+    try {
+      await thought.save();
+    } catch (error) {
+      return res.status(500).json({ error: 'Failed to update thought after deleting reaction' });
+    }
 
     res.json({ message: 'Reaction deleted successfully' });
   } catch (error) {
     res.status(400).json({ error: 'Could not delete reaction' });
   }
 };
-

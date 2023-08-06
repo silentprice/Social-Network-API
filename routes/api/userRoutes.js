@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt'); // For password verification
-const User = require('../models/User'); // Assuming you have a User model
+const User = require('../models/User'); 
 
 // Route for user login
 router.post('/login', async (req, res) => {
@@ -23,13 +23,12 @@ router.post('/login', async (req, res) => {
     }
 
     // Handle successful login
-    // You might generate and send a JWT token, set session, etc.
     res.json({ message: 'Logged in successfully' });
   } catch (err) {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// Add more routes for other user-related actions (e.g., updating profiles)
+
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Profile = require('../models/Profile'); // Assuming you have a Profile model
-const isAdmin = require('../middleware/isAdmin'); // Custom middleware to check admin status
+const Profile = require('../models/Profile');
+
 
 // Route for viewing a user's profile
 router.get('/:username', async (req, res) => {
@@ -25,7 +25,7 @@ router.get('/:username', async (req, res) => {
 router.put('/:username', async (req, res) => {
   try {
     const username = req.params.username;
-    const updatedProfileData = req.body; // Assuming request body contains updated profile data
+    const updatedProfileData = req.body; 
 
     // Update the profile data in the database
     const updatedProfile = await Profile.findOneAndUpdate({ username }, updatedProfileData, { new: true });
@@ -40,6 +40,5 @@ router.put('/:username', async (req, res) => {
   }
 });
 
-// Add more routes for other profile-related actions (e.g., adding friends)
 
 module.exports = router;

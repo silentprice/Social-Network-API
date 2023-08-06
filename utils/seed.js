@@ -3,7 +3,7 @@ const User = require('../models/User');
 const Thought = require('../models/Thought');
 const Reaction = require('../models/Reaction');
 
-const seedData = async () => {
+const seed = async () => {
   try {
     // Create users
     const user1 = await User.create({ username: 'user1' });
@@ -31,4 +31,4 @@ const seedData = async () => {
   }
 };
 
-module.exports = seedData;
+module.exports = seed;
