@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session'); 
-const bcrypt = require('bcrypt'); // You might need this for user authentication
+const bcrypt = require('bcrypt'); 
 const connection = require('./config/connection'); // Import the database connection
 const thoughtRoutes = require('./routes/thoughtRoutes');
 const reactionRoutes = require('./routes/reactionRoutes');
