@@ -1,11 +1,20 @@
 const mongoose = require('mongoose');
 
-const connectionString =
-  process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/studentsDB';
+const connectDB = async () => {
+  try {
+    const connectionString =
+      process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/social_network_api';
 
-mongoose.connect(connectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+    await mongoose.connect(connectionString, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-module.exports = mongoose.connection;
+    console.log('MongoDB connected');
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error.message);
+    process.exit(1); // Exit the process with failure
+  }
+};
+
+module.exports = connectDB;

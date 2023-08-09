@@ -1,11 +1,9 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const session = require('express-session'); 
-const bcrypt = require('bcrypt'); 
-const connection = require('./config/connection'); // Import the database connection
+const session = require('express-session');
 const thoughtRoutes = require('./routes/thoughtRoutes');
 const reactionRoutes = require('./routes/reactionRoutes');
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/api/userRoutes');
+const connectDB = require('./config/connection'); // Import the connectDB function
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -13,7 +11,6 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Configure session
 app.use(session({
   secret: 'your-secret-key',
   resave: false,
@@ -26,10 +23,7 @@ app.use('/api/reactions', reactionRoutes);
 app.use('/api/users', userRoutes);
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/social_network', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+connectDB(); // Call the connectDB function to establish the database connection
 
 // Start the server
 app.listen(PORT, () => {

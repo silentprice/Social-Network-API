@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt'); // For password verification
-const User = require('../models/User'); 
+const User = require('../../models/User'); 
 
 // Route for user login
 router.post('/login', async (req, res) => {
