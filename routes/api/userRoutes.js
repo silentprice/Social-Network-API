@@ -1,34 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt'); // For password verification
-const User = require('../../models/User'); 
+const userControllers = require('../../controllers/userControllers');
 
-// Route for user login
-router.post('/login', async (req, res) => {
-  try {
-    const { username, password } = req.body;
+// GET all users
+router.get('/', userControllers.getAllUsers);
 
-    // Find the user by username
-    const user = await User.findOne({ username });
+// POST a new user
+router.post('/', userControllers.createUser);
 
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid username or password' });
-    }
+// GET a specific user by ID
+router.get('/:userId', userControllers.getUserById);
 
-    // Compare the provided password with the stored hashed password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+// PUT (update) a specific user by ID
+router.put('/:userId', userControllers.updateUserById);
 
-    if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid username or password' });
-    }
+// DELETE a specific user by ID
+router.delete('/:userId', userControllers.deleteUserById);
 
-    // Handle successful login
-    res.json({ message: 'Logged in successfully' });
-  } catch (err) {
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+// POST (add) a friend to a user's friend list
+router.post('/:userId/friends', userControllers.addFriend);
 
-
+// DELETE a friend from a user's friend list
+router.delete('/:userId/friends/:friendId', userControllers.removeFriend);
 
 module.exports = router;

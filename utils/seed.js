@@ -1,34 +1,19 @@
-const connection = require('../config/connection');
-const User = require('../models/User');
-const Thought = require('../models/Thought');
-const Reaction = require('../models/Reaction');
+const seedUsers = require('./seedUsers');
+const seedThoughts = require('./seedThoughts');
+const seedFriends = require('./seedFriends');
+const seedReactions = require('./seedReactions');
 
-const seed = async () => {
+const seedAll = async () => {
   try {
-    // Create users
-    const user1 = await User.create({ username: 'user1' });
-    const user2 = await User.create({ username: 'user2' });
+    await seedUsers();
+    await seedThoughts();
+    await seedFriends();
+    await seedReactions();
 
-    // Create thoughts
-    const thought1 = await Thought.create({ text: 'Hello, world!', username: 'user1' });
-    const thought2 = await Thought.create({ text: 'What a beautiful day!', username: 'user2' });
-
-    // Create reactions
-    const reaction1 = await Reaction.create({
-      reactionBody: 'I agree!',
-      username: 'user2',
-      thoughtId: thought1._id,
-    });
-    const reaction2 = await Reaction.create({
-      reactionBody: 'Me too!',
-      username: 'user1',
-      thoughtId: thought2._id,
-    });
-
-    console.log('Data seeded successfully');
+    console.log('All seed data generated successfully');
   } catch (error) {
     console.error('Error seeding data:', error);
   }
 };
 
-module.exports = seed;
+seedAll();

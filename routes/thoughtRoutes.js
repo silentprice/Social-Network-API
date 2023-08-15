@@ -24,9 +24,9 @@ router.post('/', async (req, res) => {
 });
 
 // GET a specific thought by ID
-router.get('/:id', async (req, res) => {
+router.get('/thought/:thoughtId', async (req, res) => {
   try {
-    const thought = await Thought.findById(req.params.id).populate('reactions');
+    const thought = await Thought.findById(req.params.thoughtId).populate('reactions');
     if (!thought) {
       return res.status(404).json({ error: 'Thought not found' });
     }
@@ -37,9 +37,9 @@ router.get('/:id', async (req, res) => {
 });
 
 // PUT (update) a specific thought by ID
-router.put('/:id', async (req, res) => {
+router.put('/thought/:thoughtId', async (req, res) => {
   try {
-    const updatedThought = await Thought.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedThought = await Thought.findByIdAndUpdate(req.params.thoughtId, req.body, { new: true });
     if (!updatedThought) {
       return res.status(404).json({ error: 'Thought not found' });
     }
@@ -50,9 +50,9 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE a specific thought by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/thought/:thoughtId', async (req, res) => {
   try {
-    const deletedThought = await Thought.findByIdAndDelete(req.params.id);
+    const deletedThought = await Thought.findByIdAndDelete(req.params.thoughtId);
     if (!deletedThought) {
       return res.status(404).json({ error: 'Thought not found' });
     }

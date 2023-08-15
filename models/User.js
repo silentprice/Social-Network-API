@@ -4,19 +4,38 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim: true
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    validate: {
+      validator: function (value) {
+        // Regular expression to validate email format
+        return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(value);
+      },
+      message: 'Invalid email format'
+    }
   },
-  password: {
-    type: String,
-    required: true
-  },
-  // Other user-related fields can be added here
-  // Examples: firstName, lastName, profileImage, etc.
+  thoughts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Thought'
+    }
+  ],
+  friends: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ]
+});
+
+// Define a virtual field 'friendCount' to retrieve the length of 'friends' array
+userSchema.virtual('friendCount').get(function () {
+  return this.friends.length;
 });
 
 const User = mongoose.model('User', userSchema);

@@ -1,16 +1,18 @@
 const express = require('express');
 const session = require('express-session');
+const connectDB = require('./config/connection'); // Import the connectDB function
 const thoughtRoutes = require('./routes/thoughtRoutes');
 const reactionRoutes = require('./routes/reactionRoutes');
 const userRoutes = require('./routes/api/userRoutes');
-const connectDB = require('./config/connection'); // Import the connectDB function
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Session configuration
 app.use(session({
   secret: 'your-secret-key',
   resave: false,
