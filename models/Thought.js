@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const reactionSchema = require('./Reaction')
 
 const thoughtSchema = new mongoose.Schema({
   thoughtText: {
@@ -16,12 +17,7 @@ const thoughtSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  reactions: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Reaction'
-    }
-  ]
+  reactions: [reactionSchema]
 });
 
 // Define a virtual field 'reactionCount' to retrieve the length of 'reactions' array

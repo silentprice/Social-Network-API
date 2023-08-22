@@ -23,14 +23,14 @@ const reactionSchema = new mongoose.Schema({
   }
 });
 
-// Virtual getter method to format the timestamp
-reactionSchema.virtual('formattedCreatedAt').get(function () {
-  return this.formatDate(this.createdAt);
-});
+// // Virtual getter method to format the timestamp
+// reactionSchema.virtual('formattedCreatedAt').get(function () {
+//   return this.formatDate(this.createdAt);
+// });
 
-// Method to format the timestamp
-reactionSchema.methods.formatDate = function (timestamp) {
-  return new Date(timestamp).toLocaleDateString();
-};
+// // Method to format the timestamp
+// reactionSchema.methods.formatDate = function (timestamp) {
+//   return new Date(timestamp).toLocaleDateString();
+// };
 
 module.exports = reactionSchema;
